@@ -164,12 +164,20 @@ class Scraper(object):
             print('Excel saved.')
 
             dl_link = f"http://stock-chk.herokuapp.com/{self.output_folder}/{self.filename}.xlsx"
-            headers = {
-                'Content-Type': 'application/x-www-form-urlencoded',
+            payload_data = 'payload={"username": "Kinseys Stock Check", "color":"#D00000", "pretext": "<@U8RR4NQT1>, <@UC5MLB7DY> Download Complete", "text": "' + dl_link + '"}'
+
+            amz_data = {
+                "store": "kinsey", 
+                "payload":  payload_data
             }
-            data = 'payload={"username": "Kinseys Stock Check", "color":"#D00000", "pretext": "<@U8RR4NQT1>, <@UC5MLB7DY> Download Complete", "text": "' + dl_link + '"}'
-            slack = requests.post('https://hooks.slack.com/services/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', headers=headers, data=data)
-            print(slack)
+
+            amz_headers = {'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json',
+            }
+
+            requests.post("https://2ilrmjiuse.execute-api.ap-southeast-1.amazonaws.com/Test/zen_webhook", headers=amz_headers, json=amz_data)
+            
+            
             
             time.sleep(2)
         else:
