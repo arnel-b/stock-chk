@@ -168,7 +168,7 @@ class Scraper(object):
                 'Content-Type': 'application/x-www-form-urlencoded',
             }
             data = 'payload={"username": "Kinseys Stock Check", "color":"#D00000", "pretext": "<@U8RR4NQT1>, <@UC5MLB7DY> Download Complete", "text": "' + dl_link + '"}'
-            slack = requests.post('https://hooks.slack.com/services/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', headers=headers, data=data)
+            slack = requests.post('https://hooks.slack.com/services/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', headers=headers, data=data)
             print(slack)
             
             time.sleep(2)
