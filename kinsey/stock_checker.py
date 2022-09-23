@@ -168,7 +168,8 @@ class Scraper(object):
 
             amz_data = {
                 "store": "kinsey", 
-                "payload":  payload_data
+                "payload":  payload_data,
+                "ticket": {"id":"", "title":""}
             }
 
             amz_headers = {'Accept': 'application/json, text/plain, */*',
