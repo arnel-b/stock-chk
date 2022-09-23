@@ -1,0 +1,155 @@
+{% load static %}
+
+<html>
+<head>
+	<link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
+	<link rel="stylesheet" href="{% static 'css/custom.css' %}"/>
+	<link rel="stylesheet" href="{% static 'font-awesome/font-awesome-4.7.0/css/font-awesome.min.css' %}"/>
+	<style type="text/css">
+
+		body {
+
+		}
+		.row.kin {
+			margin-top: 10px;
+		}
+
+		.progress {
+			margin-top: 10px;
+			height: 15px;
+		}
+
+		#progs {
+			color: black;
+		}
+
+		.ex-icon {
+			position: relative;
+			height: 20px;
+			width: 20px;
+<!--			display: block;-->
+		}
+
+		.ex-image {
+			max-width: 3%;
+			max-height: 3%;
+		}
+
+		.titl {
+			font-size:2em;
+		}
+
+		.warning {
+			font-size: .9em;
+			margin-top: 1px;
+		}
+
+		.mycontainer {
+			margin-top:50px;
+			padding: 30 30 30 30;
+			border:#dfdbdb30 solid !important;
+			border-radius: 10px;
+			background:white;
+		}
+
+		a {
+			color: white !important;
+		}
+
+		.btn {
+			width: 250px;
+			font-weight: 100 !important;
+		}
+	</style>
+</head>
+
+<body>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<div class="container">
+		{% if status.existing %}
+		<div class="mycontainer">
+			<div class="row justify-content-md-center">
+				<div class="col col-lg-2">
+				</div>
+				<div class="col-md-auto">
+					<h1 id="title-head">You have an unfinished task.</h1>
+				</div>
+				<div class="col col-lg-2">
+				</div>
+			</div>
+			<div class="row kin ">
+				<div class="col-sm-12">
+					<div class="tex-center">
+							<span class="txt">Source file: </span>
+							<span class="ex-icon"><img class='ex-image' src="{% static 'icons/excel.png' %}"/> </span>
+							<span class="txt">{{ status.excel }}</span>
+					</div>
+				</div>
+			</div>
+			<div class="row progress">
+				<div id="progs" class="progress-bar progress-bar-striped bg-warning" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: {{ status.percnt }}%">{{ status.percnt }}% &nbsp;&nbsp; ({{ status.completed }} of {{ status.target }})</div>
+			</div>
+			<div id="rs-btn" class="row" style="margin:20px 0 20px 0;">
+				<div class="col text-center">
+					<a class="btn btn-success" href="{% url 'resume' %}"><b>Resume</b></a>
+				</div>
+			</div>
+
+			<div id="dl-btn" class="row" style="margin:20px 0 20px 0; display:none">
+				<div class="col text-center">
+					<a class="btn btn-success" href="media/to_chino/{{ status.excel }}"><b>Download</b></a>
+				</div>
+			</div>
+
+		</div>
+		{% endif %}
+
+		<div class="mycontainer">
+			<div class="row ">
+				<div class="col-md-auto">
+					<h1>Start new task</h1>
+					<p class="warning">
+						<span style="color: red"><i class="fa fa-exclamation-triangle"></i></span>
+						<i>This will delete all existing files</i></p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-auto">
+					<form method="post", action="" enctype="multipart/form-data">
+						{% csrf_token %}
+						{{ form.filemane }}
+						{{ form.file }}
+						<br/>
+						<br/>
+						<input class="btn btn-success" type="submit" name="Upload">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<!-- Bootstrap core JS-->
+<script src="js/scripts.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script type="text/javascript">
+
+	function checkProgress() {
+		if ({{ status.percnt }} >= 100) {
+			document.getElementById("title-head").innerHTML = "Previously Completed Task";
+			document.getElementById("rs-btn").remove();
+			document.getElementById("dl-btn").style.display = "block";
+			document.getElementById("progs").classList.remove("progress-bar-animated");
+			document.getElementById("progs").classList.remove("progress-bar-striped");
+		}
+	}
+
+	checkProgress();
+</script>
+
+</html>

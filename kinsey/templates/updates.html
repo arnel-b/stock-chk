@@ -1,0 +1,21 @@
+
+
+<script type="text/javascript">
+	
+function updateProgress (progressUrl) {
+    fetch(progressUrl).then(function(response) {
+        response.json().then(function(data) {
+            // update the appropriate UI components
+            alert(data)
+            setProgress(data.state, data.details);
+            setTimeout(updateProgress, 50, progressUrl);
+        });
+    });
+}
+
+var progressUrl = '{% url "progress" %}';  // django template usage
+
+updateProgress(progressUrl);
+
+
+</script>

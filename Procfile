@@ -1,0 +1,1 @@
+web: gunicorn KINSEY_ONLINE.wsgi
